@@ -9,24 +9,25 @@ function loadData(){
   //   }
   // };
   ajax.onload = function(){
-    data = JSON.parse(ajax.responseText);
-    // console.log(data);
-    showData(data, 'messages');
+    XMLData = ajax.responseXML;
+    console.log(XMLData);
+    showData(XMLData, 'messages');
   };
   var bustCache = '?' + new Date().getTime();
-  ajax.open("GET", "data.json" + bustCache, true);
+  ajax.open("GET", "data.xml" + bustCache, true);
   ajax.send();
 }
 
 function showData(d, target){
-  console.log(d);
   var htmlTarget = document.getElementById(target);
   htmlTarget.innerHTML = '';
-  for (var i=0; i<d.viestit.length; i++){
+  var d = XMLData.getElementsByTagName('viesti');
+  console.log(d);
+  for (var i=0; i<d.length; i++){
     var li = document.createElement("li");
-    var linkText = document.createTextNode(d.viestit[i].viesti);
+    var linkText = document.createTextNode(d[i].childNodes[0].nodeValue);
     var nimi = document.createElement('span');
-    var nimiText = document.createTextNode(d.viestit[i].nimi);
+    var nimiText = document.createTextNode(d[i].attributes.getNamedItem('lähettäjä').nodeValue);
     var a = document.createElement("a");
     var aText = document.createTextNode('poista');
     a.appendChild(aText);

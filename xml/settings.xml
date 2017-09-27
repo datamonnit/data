@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asetukset>
+  <otsikko>Superhieno XML-otsikko</otsikko>
+  <tausta>#dddddd</tausta>
+  <valikko>
+    <valinta url="http://www.google.fi">Google</valinta>
+    <valinta url="http://www.esedu.fi">Esedu</valinta>
+    <valinta url="http://www.mikkeli.fi">Mikkelin kaupunki</valinta>
+    <valinta url="http://www.xamk.fi">XAMK</valinta>
+    <valinta url="http://www.porvoo.fi">Porvoo</valinta>
+  </valikko>
+</asetukset>
