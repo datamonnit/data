@@ -4,27 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>JSON-POST-PHP-DEMO</title>
+    <style>
+    
+    </style>
 </head>
 <body>
     <h1>JSON-POST-PHP - Demo</h1>
     <nav>
-        <button id="send_json">Send JSON to PHP</button>
-        <button id="save_json_to_db">Save JSON to Db</button>
+        <!-- Tästä painikkeesta käynnistyy Ajax-haku tietokannasta -->
+        <button id="send_json">Hae viestit tietokannasta</button>
     </nav>
 
     <section>
         <h2>Lähetä viesti</h2>
+        <!-- Lomakkeen tiedot kootaan JSON-objektiksi ja tallennetaan kantaan -->
         <form name="viesti" method="POST" action="#" id="lomake">
             <input type="text" id="nimi" name="nimi" placeholder="Anna nimesi">
             <input type="text" id="viesti" name="viesti" placeholder="Anna viesti">
             <input type="hidden" id="piilo" name="jotain" value="piiloarvo">
+            <button id="save_json_to_db">Tallenna viesti</button>
         </form>
     </section>
     
-    <section>
-        <p id="demo"></p>
-    </section>
+    <section id="viestit"></section>
     
 
 <script>
@@ -33,7 +36,9 @@ document.getElementById("send_json").addEventListener("click", get_stuff);
 document.getElementById("save_json_to_db").addEventListener("click", save_json_to_db);
 
 
-
+/*
+get_stuff() - Hakee kannasta JSON-objektissa määritetyt tiedot ja näyttää ne 
+*/
 function get_stuff(){
 
     obj = { "table":"viestit", "fields": [ "nimi", "viesti"] };
@@ -48,14 +53,17 @@ function get_stuff(){
             for (x in myObj) {
                 html += '<h3>' + myObj[x].viesti + '</h3><p>' + myObj[x].nimi + '</p><br>';
             }
-            document.getElementById("demo").innerHTML = html;
+            document.getElementById("viestit").innerHTML = html;
         }
     };
     xmlhttp.open("POST", "json_post_esim.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xmlhttp.send("x=" + dbParam);    
 }
-    
+
+/*
+save_json_to_db() - Tallentaa lomakkeen tiedot tietokantaan
+*/
 function save_json_to_db(){
     
     var form = document.querySelector('#lomake');
@@ -77,10 +85,9 @@ function save_json_to_db(){
     
 }
 
-function save_form_data(){
-
-}
-
+/*
+formToJSON() - Muuntaa määritellyn lomakkeen tiedot JSON-objektiksi
+*/
 function formToJSON(form){
     
     var formData = {};
