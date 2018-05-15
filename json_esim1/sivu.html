@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>JSON-POST-PHP - Demo</h1>
+    <nav>
+        <button id="send_json">Send JSON to PHP</button>
+        <button id="save_json_to_db">Save JSON to Db</button>
+    </nav>
+
+    <section>
+        <h2>Lähetä viesti</h2>
+        <form name="viesti" method="POST" action="#" id="lomake">
+            <input type="text" id="nimi" name="nimi" placeholder="Anna nimesi">
+            <input type="text" id="viesti" name="viesti" placeholder="Anna viesti">
+            <input type="hidden" id="piilo" name="jotain" value="piiloarvo">
+        </form>
+    </section>
+    
+    <section>
+        <p id="demo"></p>
+    </section>
+    
+
+<script>
+
+document.getElementById("send_json").addEventListener("click", get_stuff);
+document.getElementById("save_json_to_db").addEventListener("click", save_json_to_db);
+
+
+
+function get_stuff(){
+
+    obj = { "table":"viestit", "fields": [ "nimi", "viesti"] };
+
+    dbParam = JSON.stringify(obj);
+
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            html = "";
+            myObj = JSON.parse(this.responseText);
+            for (x in myObj) {
+                html += '<h3>' + myObj[x].viesti + '</h3><p>' + myObj[x].nimi + '</p><br>';
+            }
+            document.getElementById("demo").innerHTML = html;
+        }
+    };
+    xmlhttp.open("POST", "json_post_esim.php", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("x=" + dbParam);    
+}
+    
+function save_json_to_db(){
+    
+    var form = document.querySelector('#lomake');
+    console.log(form);
+    formData = formToJSON(form);
+    dbParam = JSON.stringify(formData);
+
+    xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            // myObj = JSON.parse(this.responseText);
+            // console.log(myObj);
+            document.getElementById("demo").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("POST", "json_post_esim_2.php", true);
+    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send("x=" + dbParam);    
+    
+}
+
+function save_form_data(){
+
+}
+
+function formToJSON(form){
+    
+    var formData = {};
+    var skipTypes = ['submit','image','button','file','hidden'];
+    console.log(skipTypes);
+    var skipNames = [];
+    
+    var elements = form.elements;
+
+    for (var i = 0, element; element = elements[i++];) {
+    
+        if (skipTypes.indexOf(element.type) > 0){
+            console.log('Skipataan koska ' + element.type);
+        } else {
+            formData[element.name] = element.value;
+        }
+    }
+
+    return formData;
+
+}
+
+</script>
+
+
+
+</body>
+</html>
