@@ -10,7 +10,7 @@ $json_array = json_decode($json, true, 512, JSON_UNESCAPED_UNICODE);
 if ($json_file = file_get_contents('data.json')) {
 
   $array_data = json_decode($json_file, true);
-  $array_data['viestit'][] = $json_array;
+  $array_data[] = $json_array;
   $final_data = json_encode($array_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
   if (file_put_contents('data.json',$final_data)){

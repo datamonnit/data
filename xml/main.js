@@ -1,28 +1,47 @@
-document.getElementById("btnSend").addEventListener("click", saveData);
+/**
+ * main.js - File handles all dynamic stuff on this XML-exmaple app
+ * 
+ * @license   MIT
+ * @author    Tuomas Puro
+ * 
+ */
 
+// Handler for sending new message
+document.getElementById("btnSendJson").addEventListener("click", jsonSaveData);
+document.getElementById("btnSendPostData").addEventListener("click", postSaveData);
+
+
+// Defining constants
+const xmlFile = "data.xml";
+
+/**
+ * loadData - Load defined XML-file through Ajax call
+ */
 function loadData(){
   var ajax = new XMLHttpRequest();
-  // xhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     data = JSON.parse(xhttp.responseText);
-  //     showData(data, 'messages');
-  //   }
-  // };
   ajax.onload = function(){
-    XMLData = ajax.responseXML;
-    console.log(XMLData);
-    showData(XMLData, 'messages');
+    showData(ajax.responseXML, 'messages');
   };
   var bustCache = '?' + new Date().getTime();
-  ajax.open("GET", "data.xml" + bustCache, true);
+  ajax.open("GET", xmlFile + bustCache, true);
   ajax.send();
 }
 
-function showData(d, target){
+/**
+ * showData - Shows XML-data as a HTML list
+ * @param {object} data - XML-data
+ * @param {string} target - defines DOM-node where list is to be generated
+ */
+function showData(data, target){
+
+  // Define and clear target element
   var htmlTarget = document.getElementById(target);
   htmlTarget.innerHTML = '';
-  var d = XMLData.getElementsByTagName('viesti');
-  console.log(d);
+  
+  // Get all elements by viesti-tag
+  var d = data.getElementsByTagName('viesti');
+  
+  // Compose li-elements from data
   for (var i=0; i<d.length; i++){
     var li = document.createElement("li");
     var linkText = document.createTextNode(d[i].childNodes[0].nodeValue);
@@ -41,7 +60,11 @@ function showData(d, target){
   }
 }
 
-function saveData(){
+
+/**
+ * Save form data in xml-file. Pass data as json blob-file
+ */
+function jsonSaveData(){
   var ajax = new XMLHttpRequest();
   ajax.onload = function() {
     console.log(ajax.responseText);
@@ -52,12 +75,36 @@ function saveData(){
   var nimi = document.getElementById('nimi').value;
   var viesti = document.getElementById('viesti').value;
   var obj = {nimi: document.getElementById('nimi').value, viesti: document.getElementById('viesti').value }
-  ajax.open("POST", "save.php", true);
+  console.log(obj);
+  ajax.open("POST", "json-save.php", true);
   ajax.setRequestHeader("Content-Type", "application/json");
   ajax.send(JSON.stringify(obj));
 
 }
 
+
+/**
+ * Save form data in xml-file. Pass data as post multipart-form-data
+ */
+function postSaveData(){
+  event.preventDefault();
+  var ajax = new XMLHttpRequest();
+  ajax.onload = function() {
+    console.log(ajax.responseText);
+    loadData();
+    document.forms['lomake'].reset();
+  };
+
+  formData = new FormData(document.forms['lomake']);
+  ajax.open("POST", "post-data-save.php", true);
+  ajax.send(formData);
+
+}
+
+/**
+ * del - removes xml-node from file at defined index, provided by parameter
+ * @param {integer} p 
+ */
 function del(p){
   var ajax = new XMLHttpRequest();
   ajax.onload = function() {

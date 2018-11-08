@@ -8,13 +8,14 @@
   <body onload="loadData();">
     <div class="container">
       <h1>XML-esimerkki</h1>
-      <form name="lomake" onsubmit="return;">
+      <form name="lomake" onsubmit="saveData();">
         <label>Viesti</label>
-        <textarea name="message" id="viesti" placeholder="Viestisi tähän"></textarea>
+        <textarea name="viesti" id="viesti" placeholder="Viestisi tähän"></textarea>
         <!-- <input type="text" name="message" placeholder="viesti" id="viesti"> -->
         <label>Lähettäjä</label>
-        <input type="text" name="name" placeholder="nimi" id="nimi">
-        <input type="button" name="send" id="btnSend" value="Lähetä">
+        <input type="text" name="nimi" placeholder="nimi" id="nimi">
+        <input type="button" name="sendjson" id="btnSendJson" value="Lähetä (json)">
+        <input type="button" name="sendpost" id="btnSendPostData" value="Lähetä (post)">
       </form>
 
       <!-- Viestit ladataan tähän -->

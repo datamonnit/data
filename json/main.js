@@ -2,15 +2,9 @@ document.getElementById("btnSend").addEventListener("click", saveData);
 
 function loadData(){
   var ajax = new XMLHttpRequest();
-  // xhttp.onreadystatechange = function() {
-  //   if (this.readyState == 4 && this.status == 200) {
-  //     data = JSON.parse(xhttp.responseText);
-  //     showData(data, 'messages');
-  //   }
-  // };
+
   ajax.onload = function(){
     data = JSON.parse(ajax.responseText);
-    // console.log(data);
     showData(data, 'messages');
   };
   var bustCache = '?' + new Date().getTime();
@@ -18,15 +12,22 @@ function loadData(){
   ajax.send();
 }
 
+
+/**
+ * showData - Shows given json-object in targeted html ul-element as a list
+ * @param {json object} json
+ * @param {string} target 
+ */
 function showData(d, target){
-  console.log(d);
+
   var htmlTarget = document.getElementById(target);
   htmlTarget.innerHTML = '';
-  for (var i=0; i<d.viestit.length; i++){
+
+  for (var i=0; i<d.length; i++){
     var li = document.createElement("li");
-    var linkText = document.createTextNode(d.viestit[i].viesti);
+    var linkText = document.createTextNode(d[i].viesti);
     var nimi = document.createElement('span');
-    var nimiText = document.createTextNode(d.viestit[i].nimi);
+    var nimiText = document.createTextNode(d[i].nimi);
     var a = document.createElement("a");
     var aText = document.createTextNode('poista');
     a.appendChild(aText);
@@ -40,6 +41,9 @@ function showData(d, target){
   }
 }
 
+/**
+ * saveData - Saves calls save.php -script to save form data
+ */
 function saveData(){
   var ajax = new XMLHttpRequest();
   ajax.onload = function() {
@@ -57,6 +61,10 @@ function saveData(){
 
 }
 
+/**
+ * del - Makes Ajax-call to del.php -srcipt to delete json-object form a file
+ * @param {integer} p 
+ */
 function del(p){
   var ajax = new XMLHttpRequest();
   ajax.onload = function() {

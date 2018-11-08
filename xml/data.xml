@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data>
   <viestit>
-    <viesti lähettäjä="Jari">On kyllä hienoa</viesti>
-    <viesti lähettäjä="Urpo">Yhdessä tekemisen meininki</viesti>
-    <viesti lähettäjä="Karri">Hyvää on ruoka</viesti>
     <viesti lähettäjä="Keuno">Elämä on ihmisen parasta aikaa</viesti>
     <viesti lähettäjä="Lempi">Ei voi olla</viesti>
-    <viesti lähettäjä="Visa">On se</viesti>
+    <viesti lähettäjä="Heikki">Moron</viesti>
+    <viesti lähettäjä="Make">Joko voi mennä syömään</viesti>
   </viestit>
 </data>

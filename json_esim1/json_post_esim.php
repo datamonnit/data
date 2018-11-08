@@ -5,7 +5,7 @@ header("Content-Type: application/json; charset=UTF-8");
 
 $obj = json_decode($_POST["x"], false);
 
-$sql = "SELECT {$obj->fields[0]}, {$obj->fields[1]} FROM {$obj->table};";
+$sql = "SELECT {$obj->fields[0]}, {$obj->fields[1]}, {$obj->fields[2]} FROM {$obj->table} ORDER BY pvm DESC;";
 $result = $conn->query($sql);
 
 $outp = array();

@@ -19,20 +19,24 @@
     <section>
         <h2>Lähetä viesti</h2>
         <!-- Lomakkeen tiedot kootaan JSON-objektiksi ja tallennetaan kantaan -->
-        <form name="viesti" method="POST" action="#" id="lomake">
+        <form id="lomake">
             <input type="text" id="nimi" name="nimi" placeholder="Anna nimesi">
             <input type="text" id="viesti" name="viesti" placeholder="Anna viesti">
             <input type="hidden" id="piilo" name="jotain" value="piiloarvo">
-            <button id="save_json_to_db">Tallenna viesti</button>
         </form>
+        <button id="save_json_to_db">Tallenna viesti</button>
     </section>
     
     <section id="viestit"></section>
+    <section id="loki"></section>
     
 
 <script>
 
 document.getElementById("send_json").addEventListener("click", get_stuff);
+// document.getElementById("lomake").addEventListener("submit", function(e){
+//     e.prventDefault();
+// });
 document.getElementById("save_json_to_db").addEventListener("click", save_json_to_db);
 
 
@@ -41,7 +45,7 @@ get_stuff() - Hakee kannasta JSON-objektissa määritetyt tiedot ja näyttää n
 */
 function get_stuff(){
 
-    obj = { "table":"viestit", "fields": [ "nimi", "viesti"] };
+    obj = { "table":"viestit", "fields": [ "nimi", "viesti", "pvm"] };
 
     dbParam = JSON.stringify(obj);
 
@@ -51,7 +55,7 @@ function get_stuff(){
             html = "";
             myObj = JSON.parse(this.responseText);
             for (x in myObj) {
-                html += '<h3>' + myObj[x].viesti + '</h3><p>' + myObj[x].nimi + '</p><br>';
+                html += '<p>' + myObj[x].viesti + ' : ' + myObj[x].nimi + '<br>(' + myObj[x].pvm + ')</p>';
             }
             document.getElementById("viestit").innerHTML = html;
         }
@@ -76,12 +80,15 @@ function save_json_to_db(){
         if (this.readyState == 4 && this.status == 200) {
             // myObj = JSON.parse(this.responseText);
             // console.log(myObj);
-            document.getElementById("demo").innerHTML = this.responseText;
+            document.getElementById("viestit").innerHTML = this.responseText;
         }
     };
-    xmlhttp.open("POST", "json_post_esim_2.php", true);
-    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xmlhttp.send("x=" + dbParam);    
+    // xmlhttp.open("POST", "json_post_esim_2.php", true);
+    xmlhttp.open("POST", "json_post_esim_3.php", true);
+    // xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlhttp.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+    // xmlhttp.send("x=" + dbParam);
+    xmlhttp.send(dbParam);
     
 }
 

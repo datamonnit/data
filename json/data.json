@@ -1,9 +1,18 @@
-{"viestit":
-  [{
-  	"nimi": "Keijo",
-  	"viesti": "Moi!"
-  }, {
-  	"nimi": "Raija",
-  	"viesti": "Hei"
-  }]
-}
+[
+    {
+        "nimi": "Keijo",
+        "viesti": "Moi!"
+    },
+    {
+        "nimi": "Raija",
+        "viesti": "Hei"
+    },
+    {
+        "nimi": "ereyrey",
+        "viesti": "rtrtyrtyrty"
+    },
+    {
+        "nimi": "James",
+        "viesti": "James rules"
+    }
+]
