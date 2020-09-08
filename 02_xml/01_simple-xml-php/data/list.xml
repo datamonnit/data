@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<lista>
+  <tuote>
+    <nimi>maito</nimi>
+    <määrä>1</määrä>
+  </tuote>
+  <tuote>
+    <nimi>maito</nimi>
+    <määrä>10</määrä>
+  </tuote>
+  <tuote>
+    <nimi>nakkia</nimi>
+    <määrä>23</määrä>
+  </tuote>
+  <tuote>
+    <nimi>nakkia</nimi>
+    <määrä>7</määrä>
+  </tuote>
+</lista>
